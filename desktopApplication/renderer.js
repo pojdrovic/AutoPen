@@ -1,0 +1,1 @@
+document.write('The version of node is ' + process.version);
