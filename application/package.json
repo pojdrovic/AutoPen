@@ -1,0 +1,19 @@
+{
+  "name": "application",
+  "version": "1.0.0",
+  "description": "Integrated packaging application for AutoPen",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pojdrovic/AutoPen.git"
+  },
+  "author": "Petar Ojdrovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pojdrovic/AutoPen/issues"
+  },
+  "homepage": "https://github.com/pojdrovic/AutoPen#readme"
+}
