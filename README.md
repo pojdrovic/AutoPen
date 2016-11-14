@@ -24,8 +24,11 @@ Describe and show how to run the tests with code examples.
 
 ## Contributors
 
-Let people know how they can dive into the project, include important links to things like issue trackers, irc, twitter accounts if applicable.
+--------
+| Name | Email |
+| :--- | :---- |
+| Petar Ojdrovic | pojdrovic@gmail.com |
 
 ## License
 
-A short snippet describing the license (MIT, Apache, etc.)
+Copyright 2016. Code released under the [Apache 2.0](./LICENSE) license.
