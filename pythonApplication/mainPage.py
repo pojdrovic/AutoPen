@@ -1,13 +1,6 @@
-'''
-from tkinter import Tk, BOTH, Label
-from tkinter.ttk import Frame, Button, Style
-#from PIL import Image, ImageTk
-
-''''
-
-
 from tkinter import Tk, Frame, Checkbutton, Button
-from tkinter import BooleanVar, BOTH
+from tkinter import BooleanVar, BOTH, END
+import subprocess as sub
 from git import Repo
 import git
 import os
@@ -80,18 +73,49 @@ class Example(Frame):
         dir_str = dir_str_os + "/caringcaribou"
         print(os.path.isdir(dir_str))
 
+
         if(os.path.isdir(dir_str) == False):
             print("Need to install the application")
             git.Git().clone("https://github.com/CaringCaribou/caringcaribou.git")
             print("Successfully cloned!")
+
         
         if(os.path.isdir(dir_str) == False):
             print("We already have this repository")
+
+            p = sub.Popen(dir_str + '/tool/cc.py',stdout=sub.PIPE,stderr=sub.PIPE)
+            output, errors = p.communicate
+            subprocess.call('start' + dir_str + '/tool/ python cc.py', shell=True)
+
+            cmd_line = dir_str + '/tool/ python cc.py'
+            p1 = subprocess.Popen(cmd_line, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            out = p1.communicate()[0]
+            print(out)
+
+
+
+        #p = sub.Popen(dir_str + '/tool/cc.py',stdout=sub.PIPE,stderr=sub.PIPE)
+        #output, errors = p.communicate
 
 
 
     def app3Click(self):
         print("application3")
+
+        print("application1")
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        dir_str_os = str(dir_path)
+        dir_str = dir_str_os + "/UDSim"
+        print(os.path.isdir(dir_str))
+        print(dir_path)
+
+        if(os.path.isdir(dir_str) == False):
+            print("falsaasdfe")
+            git.Git().clone("git://github.com/dschanoeh/UDSim")
+            print("successfully cloned!")
+
+        if(os.path.isdir(dir_str) == True):
+            print("We already have this repository!")
 
 
 def main():
@@ -99,6 +123,8 @@ def main():
     root = Tk()
     root.geometry("250x150+300+300")
     app = Example(root)
+    #app.pack()
+    #app.insert(END, output)
     root.mainloop()
 
 
