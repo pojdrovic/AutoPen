@@ -58,7 +58,7 @@ class MainApp(tk.Tk):
 
         # When you build new pages, add them to this list!
         # Otherwise they will not be visible to the controller
-        self.pages = [StartPage, PageOne, PageTwo, PageThree, CreateCar, InstallModulesPage]
+        self.pages = [StartPage, PageOne, PageTwo, PageThree, CreateCar, InstallModulesPage, LoadCar]
 
         #for F in (StartPage, PageOne, PageTwo, PageThree, CreateCar):
         for F in self.pages:
@@ -93,8 +93,8 @@ class StartPage(tk.Frame):
                             command=lambda: controller.show_frame("PageTwo"))
         button3 = ttk.Button(self, text="Go to Graphs page",
                             command=lambda: controller.show_frame("PageThree"))
-        button4 = ttk.Button(self, text="Install Modules Page",
-                             command=lambda :controller.show_frame("InstallModulesPage"))
+        button4 = ttk.Button(self, text="Load Cars",
+                             command=lambda :controller.show_frame("LoadCar"))
         button1.pack()
         button2.pack()
         button3.pack()
@@ -187,6 +187,52 @@ class CreateCar(tk.Frame):
 # Class to load a car into the framework
 class LoadCar(tk.Frame):
     print("nothing helper lolololo")
+
+
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        self.controller = controller
+        label = tk.Label(self, text="Graph Page", font=TITLE_FONT)
+        label.pack(side="top", fill="x", pady=10)
+        button = ttk.Button(self, text="Go to the start page",
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
+        self.initialize()
+
+
+
+
+        #var = StringVar(self)
+
+
+        choices = {
+        'Ford': '35',
+        'Chevy': '45',
+        'Lexus': '32',
+        'Fucksus': '64',
+        'Bullshit': '21',
+        }
+
+
+
+    # Code to build drop down menu
+    # Please do not change
+    # Theoretically should be broken but is working so far.
+    def initialize(self):
+
+        # Dropdown Menu
+        optionList = ["Yes","No"]
+        self.dropVar=tk.StringVar()
+        self.dropVar.set("Yes") # default choice
+        self.dropMenu1 = tk.OptionMenu(self, self.dropVar, *optionList, command=self.func)
+        self.dropMenu1.pack()
+        print(self.dropVar)
+
+
+    def func(self,value):
+        print(value)
+
 
 
 '''
