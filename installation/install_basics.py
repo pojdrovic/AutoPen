@@ -12,32 +12,9 @@ Assumes user is running as root and has apt-get installed
 #send STDERR to STDOUT: http://stackoverflow.com/questions/29580663/save-error-message-of-subprocess-command
 #right now it logs everything, once completed add functionality for errors to print in RED and for multiple logs to be made, complete, STDERR, etc.
 
-import platform
+import general_use
 
-distro = ''
-
-def check_distribution():
-	system = platform.system() #could use this to check whether it's a linux system or not
-	distribution = (platform.linux_distribution())[0]
-
-	if 'Kali' == distribution or 'kali' == distribution:
-		distro = 'kali'
-	elif 'Debian' == distribution or 'debian' == distribution:
-		distro = 'debian'
-	elif 'Ubuntu' == distribution or 'ubuntu' == distribution:
-		distro = 'ubuntu'
-	elif 'Red Hat' == distribution or 'red hat' == distribution:
-		distro = 'red hat'
-
-def package_tool(distro):
-	pt = ''
-
-	if d == 'kali' or d == 'debian' or d == 'ubuntu':
-		pt = 'apt-get'
-	elif d == 'red hat':
-		pt = 'yum'
-
-	return pt
+distro = general_use.check_distribution()
 
 def install_python(d):
 	'''
@@ -71,17 +48,7 @@ def install_git(d):
 		print ("INSTALLATION SUCCESSFUL: Git successfully installed")
 
 
-def update(d):
-	'''
-		This function updates software packages based on repository state
-		This needs to be included at the beginning of every major installation function
-	'''	
-	pack_man = package_tool(d)
-
-	update = subprocess.run(["sudo", pack_man, "update"])
-
-
-check_distribution()
 install_python(distro)
 install_git(distro)
-update(distro)
+
+general_use.update(distro)
