@@ -10,6 +10,36 @@ def install_general(pack_man, i): # maven, pip
 	c = subprocess.run(['sudo', pack_man, 'install', i])
 	return c.returncode
 
+def download_general(toolname, link):
+	d = subprocess.run(['curl', '-o', toolname, link]) 
+	return d.returncode
+
+def install_pyserial(link):
+	down_load = subprocess.run(['curl', '-o', 'pyserial', link]) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL 
+	if down_load.returncode != 0:
+			print ('DOWNLOAD FAILED: Failed to download pyserial. This is needed to run pyobd')
+			print ('WITH ERROR CODE:', down_load.returncode)
+			return down_load.returncode
+		else:
+			print ('DOWNLOAD SUCCESSFUL: Successfully downloaded pyserial')
+			print ('Building PySerial 2.0 package...')
+			current_dir = os.getcwd()
+			path = current_dir + '/pyserial-2.0'
+			os.chdir(path)
+			install = subprocess.run(['python', 'setup.py', 'build'])
+			if install.returncode != 0:
+				print ('BUILD FAILED: Failed to build pyserial. This is needed to run pyobd. Cannot finish PyOBD installation')
+				print ('WITH ERROR CODE:', install.returncode)
+				return install.returncode
+			else:
+				print ('BUILD SUCCESSFUL: Successfully completed pyserial build')
+				print ('Installing pyserial...')
+				i = subprocess.run(['sudo', 'python', 'setup.py', 'install'])
+				if i.returncode != 0:
+					return i.returncode
+				else:
+					return 0
+
 def install_NPM(pack_man):
 
 	print ('Installing npm...')
@@ -34,7 +64,6 @@ def check_symlink(source_file, symlink):
 	else:
 		print ('Symbolic link already created between', source_file, 'and', symlink)
 		return 0
-
 
 def check_NPM(pack_man): #cant decide if should do this / count this as basics, like install ruby and gcc and homebrew so that later can just run brew install node? 
 
@@ -75,3 +104,4 @@ def check_NPM(pack_man): #cant decide if should do this / count this as basics, 
 			print ('CONFIRMATION FAILED: Could not confirm installation of npm')
 			print ('WITH ERROR CODE: ', npm_check.returncode)
 			return npm_check.returncode
+
