@@ -12,13 +12,13 @@ def check_distribution():
 	system = platform.system() #could use this to check whether it's a linux system or not
 	distribution = (platform.linux_distribution())[0]
 
-	if 'Kali' == distribution or 'kali' == distribution:
+	if 'Kali' == distribution or 'kali' == distribution: #maybe make this to do general debian based tools
 		distro = 'kali'
 	elif 'Debian' == distribution or 'debian' == distribution:
 		distro = 'debian'
 	elif 'Ubuntu' == distribution or 'ubuntu' == distribution:
 		distro = 'ubuntu'
-	elif 'Red Hat' == distribution or 'red hat' == distribution:
+	elif 'Red Hat' == distribution or 'red hat' == distribution: #make this so that it checks fedora 
 		distro = 'red hat'
 
 	return distro
