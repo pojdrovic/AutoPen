@@ -1,0 +1,15 @@
+class sensor_distance_with_mil_on : public sensor
+{
+public:
+	int get_mode() { return 0x01; }
+	int get_pid() { return 0x21; }
+	std::string get_symbol() { return "distance_with_mil_on"; }
+	std::string get_unit() { return "km"; }
+	std::string get_description() { return "distance traveled with MIL on"; }
+	std::string get_screen_formatting() { return "%s"; }
+	color_t get_color() { return C_WHITE; }
+	void get_range(double *mi, double *ma) { *mi = 0; *ma = 0; }
+	processing_t get_processor() { return ppid_string; }
+	bool is_meta() { return true; }
+	bool get_value(OBD2 *o, std::string *value);
+};

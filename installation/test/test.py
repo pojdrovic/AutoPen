@@ -14,6 +14,7 @@ elif canbus.returncode == 0:
 #current = os.getcwd()
 #n = current + '/test'
 #os.chdir(n)
+'''
 then = ''
 try: 
 	then = subprocess.run(['test', '-h', 'test.py'])
@@ -23,3 +24,11 @@ try:
 		print ('symlink')
 except:
 	print ('Not existing')
+'''
+
+extract = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar'])
+if extract.returncode != 0:
+	print ('EXTRACTION FAILED: Failed to decompress the o2oo tar file')
+	print ('WITH ERROR CODE:', extract.returncode)
+else:
+	print ('EXTRACTION SUCCESSFUL: Successfully extracted o2oo tar file')
