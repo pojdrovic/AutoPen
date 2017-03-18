@@ -1,55 +1,52 @@
 '''
 
-We only want the whole thing to run if the install all or install all CAN button is pressed
-
-Else, we need to function to take in distro and the name of the tool depending on the button pressed and then install that
-
-Note: Make sure the user knows that this will all be cloned in the current directory aka most likely /Users/'user'
-
-'''
-
 #Reference Links for me, might remove later we'll see how life goes 
-#can-utils : https://discuss.cantact.io/t/using-can-utils/24 (eric evenchick)
-#canbus-utils : http://www.digitalbond.com/blog/2015/03/05/tool-release-digital-bond-canbus-utils/
-#NPM: http://blog.teamtreehouse.com/install-node-js-npm-linux
-#NPM2: http://www.hostingadvice.com/how-to/install-nodejs-ubuntu-14-04/#node-version-manager (May 2016)
-#build-essential can fail, try this just incase: http://unix.stackexchange.com/questions/275438/kali-linux-2-0-cant-install-build-essentials
+	can-utils : https://discuss.cantact.io/t/using-can-utils/24 (eric evenchick)
+	canbus-utils : http://www.digitalbond.com/blog/2015/03/05/tool-release-digital-bond-canbus-utils/
+	NPM: http://blog.teamtreehouse.com/install-node-js-npm-linux
+	NPM2: http://www.hostingadvice.com/how-to/install-nodejs-ubuntu-14-04/#node-version-manager (May 2016)
+	build-essential can fail, try this just incase: http://unix.stackexchange.com/questions/275438/kali-linux-2-0-cant-install-build-essentials
 
-#LOOK INTO CURL TO GET THE ONES FROM THE WEBSITES VERSUS INCLUDING IT
-#NEED TO CHANGE ALL THE TOOLS TO DOWNLOAD STUFF INTO THEIR FOLDER so that it doesn't just throw everything in one directory
+TO DO: 
+	NEED TO CHANGE ALL THE TOOLS TO DOWNLOAD STUFF INTO THEIR FOLDER so that it doesn't just throw everything in one directory (aka cd right after clone/download)
 
-'''
+Front End/Back End Connection:
+	We only want the whole thing to run if the install all or install all CAN button is pressed
+	Else, we need to function to take in distro and the name of the tool depending on the button pressed and then install that
 
-Tools left to do:
+Note:
+	ELM327:
+		Be forewarned that the ELM327 has limited buffer space, so you will lose packets when sniffing,
+ 		and transmission can be a bit imprecise, but if you're in a pinch this is the cheapest route.
 
-ELM327 = canibus, pyobd, o2oo, 
-Be forewarned that the ELM327 has limited buffer space, so you will lose packets when sniffing,
- and transmission can be a bit imprecise, but if you're in a pinch this is the cheapest route.
+ 	Make sure the user knows that this will all be cloned in the current directory aka most likely /Users/'user'
 
-SDR = GNU Radio
 
-Miscellaneous = AVRDUDESS
-
-Car specific = 
-	RomRaider: Subaru
-	OpenPilot = Hondas and Acuras
-Octane not made available because runs on Windows
-
-Hardware = 
-	CANtact
+Tools may be included:
+	canibus for ELM327:
+		(go-server)
+	CANtact:
+		will provide a section in here with the github link and the website link so that the user can build their own
+		Also, will possibly provide steps on how to do so (will learn how to do this first)
 
 '''
 
 import general_use
 import os
 
-#this will be placed somewhere else?
+#this will be placed somewhere else, maybe a dictionary?
 repo_socketCAN = 'https://github.com/linux-can/can-utils.git' #needed to run can-utils
 repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils'
 repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
 repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
 repo_c0f = 'https://github.com/zombieCraig/c0f.git'
 repo_udsim = 'https://github.com/zombieCraig/UDSim.git'
+
+#for download links
+download_pyobd = 'http://www.obdtester.com/download/pyobd_0.9.3.tar.gz'
+download_pyobd_debian = 'http://www.obdtester.com/download/pyobd_0.9.3_all.deb'
+download_pyserial = 'https://sourceforge.net/projects/pyserial/files/pyserial/2.0/pyserial-2.0.zip/download'
+download_o2oo = 'https://www.vanheusden.com/O2OO/O2OO-0.9.tgz'
 
 def github_tools(d, toolname, repo):
 	'''
@@ -196,7 +193,40 @@ def github_tools(d, toolname, repo):
 
         	#TO DO 
 
-def downloaded_tools(d, toolname):
+def downloaded_tools(d, toolname, link): #WxPython and some other library
+	pack_man = general_use.package_tool(d)
+	general_use.update(d)
+
+	#NOTE: If pyOBD link doesn't work tell them the install.html is available
+
+	down = download_general(toolname, link)
+	if down != 0:
+		print ('DOWNLOAD FAILED: Failed to download file for', toolname, 'using download link:', link)
+		print ('WITH ERROR CODE: ', down)
+	elif down == 0:
+		print ('DOWNLOAD SUCCESSFUL: Successfully downloaded file for' toolname)
+
+		if toolname == 'pyobd':
+			if d == 'debian':
+				deb = dependencies.download_general('pyobd_0.9.3_all.deb', download_pyobd_debian)
+				if deb != 0:
+					print ('Download Failed: Failed to download debian a')
+			print ('Beginning pyserial installation...')
+			pyserial = dependencies.download_general('pyserial', download_pyserial)
+			if pyserial != 0:
+				print ('INSTALLATION FAILED: Failed to install pyserial. Cannot complete pyobd installation')
+				print ('WITH ERROR CODE:', pyserial)
+			else:
+				print ('INSTALLATION SUCCESSFUL: Successfully installed pyserial and pyobd')	
+		elif toolname = 'o2oo':
+			print ('Installing o2oo...')
+			extract = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar'])
+			if extract.returncode != 0:
+				print ('EXTRACTION FAILED: Failed to decompress the o2oo tar file')
+				print ('WITH ERROR CODE:', extract.returncode)
+			else:
+				print ('EXTRACTION SUCCESSFUL: Successfully extracted o2oo tar file. o2oo has been successfully installed')
+
 
 
 
