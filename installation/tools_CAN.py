@@ -53,7 +53,6 @@ def github_tools(d, toolname, repo):
 		This function installs the tools that use github
 	'''
 	pack_man = general_use.package_tool(d)
-
 	general_use.update(d)
 
 	install = ''
@@ -174,6 +173,8 @@ def github_tools(d, toolname, repo):
 
 		elif toolname == 'udsim': #know later that when user starts the program they have to run make in the file that they are in. Or maybe we can run make
 			number = 0
+
+			#lambda these map to function
 			dev = dependencies.install_general(packman, 'libsdl2-dev')
 			image = dependencies.install_general(packman, 'libsdl2-image')
 			ttf = dependencies.install_general(packman, 'libsdl2-ttf')
@@ -190,7 +191,6 @@ def github_tools(d, toolname, repo):
 
         elif toolname == 'canibus':
 
-
         	#TO DO 
 
 def downloaded_tools(d, toolname, link): #WxPython and some other library
@@ -199,6 +199,7 @@ def downloaded_tools(d, toolname, link): #WxPython and some other library
 
 	#NOTE: If pyOBD link doesn't work tell them the install.html is available
 
+	#NOTE: MAY WANT TO MAKE THIS A FUNCTION LATER
 	down = download_general(toolname, link)
 	if down != 0:
 		print ('DOWNLOAD FAILED: Failed to download file for', toolname, 'using download link:', link)
