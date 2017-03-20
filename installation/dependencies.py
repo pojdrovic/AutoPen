@@ -14,6 +14,11 @@ def download_general(toolname, link):
 	d = subprocess.run(['curl', '-o', toolname, link]) 
 	return d.returncode
 
+def clone_git_repo(repo):
+	print ("Cloning repository...")	#might install 
+	clone = subprocess.run(["git", "clone", repo])
+	return clone.returncode
+
 def install_pyserial(link):
 	down_load = subprocess.run(['curl', '-o', 'pyserial', link]) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL 
 	if down_load.returncode != 0:
@@ -104,4 +109,52 @@ def check_NPM(pack_man): #cant decide if should do this / count this as basics, 
 			print ('CONFIRMATION FAILED: Could not confirm installation of npm')
 			print ('WITH ERROR CODE: ', npm_check.returncode)
 			return npm_check.returncode
+
+def install_bluez():
+	print ('Installing Bluez...')
+	print ('Cloning Bluez repository...')
+	clone = clone_git_repo(repo_bluez)
+	if clone.returncode != 0:
+		print ('CLONING FAILED: Failed to clone repository at', repo)
+		print ('WITH ERROR CODE: ', clone.returncode)
+	elif clone.returncode == 0:
+		print ('CLONING SUCCESSFUL: Successfully cloned repository at', repo)
+		current_dir = os.getcwd()
+		path = current_dir + '/bluez-tools-master'
+		os.chdir(path)
+		config = subprocess.run(['./configure'])
+		if config != 0:
+			print ('CONFIGURATION FAILED: Failed to run ./configure after cloning Bluez repo')
+			print ('WITH ERROR CODE:', config)
+			return config
+		else:
+			print ('CONFIGURATION SUCCESSFUL: Successfully ran ./configure after cloning Bluez repo')
+			print ('Compiling...')
+			make = subprocess.run(['make'])
+			if make.returncode != 0:
+				print ('COMPILATION FAILED: Failed to compile bluez package')
+				print ('WITH ERROR CODE:', make.returncode)
+				return make.returncode
+			else:
+				print ('COMPILATION SUCCESSFUL: Successfully compiled bluez package')
+				print ('Installing Bluez...')
+				make_install = subprocess.run(['make', 'install'])
+				if make_install.returncode != 0:
+					print ('INSTALLATION FAILED: Failed to make install.')
+					print ('WITH ERROR CODE:', make_install.returncode)
+					return make_install.returncode
+				else:
+					print ('INSTALLATION SUCCESSFUL: Successfully ran make install')
+					return 0
+
+
+
+
+
+
+
+
+
+
+
 
