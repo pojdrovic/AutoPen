@@ -27,25 +27,50 @@ def filterArbIdData(arbdata):
 	dataset = set(temparbdata)
 	return dataset
 
+def padzero(x,y):
+	last = x[-1]+1
+	for i in range(1,100):
+		y.append(0)
+		x.append(last)
+		last +=1
+
+def plot(ax, style, x, y):
+	return ax.plot(x, y, style, animated=True)[0]
+
+def delta(y):
+	prev=0
+	yvars = []
+	for i in y:
+		yvars.append(i-prev)
+		prev = i
+	return yvars
+
 #blit plotting
 def plotArbIdf(starttime,endtime,arbdata,inc):
-	plotarbdata = np.asarray(arbdata)
 	xvars, yvars = findvars(starttime, endtime, arbdata, inc)
+	padzero(xvars,yvars)
 	x=xvars[0:10]
 	y=yvars[0:10]
-	fig, axes = plt.subplots(nrows=6)
+	fig, axes = plt.subplots(nrows=2)
 	styles = ['r-', 'g-', 'y-', 'm-', 'k-', 'c-']
 
-	def plot(ax, style):
-		return ax.plot(x, y, style, animated=True)[0]
-	lines = [plot(ax, style) for ax, style in zip(axes, styles)]
+#	def plot(ax, style):
+#		return ax.plot(x, y, style, animated=True)[0]
+#	lines = [plot(ax, style) for ax, style in zip(axes, styles)]
+	lines = [plot(axes[0], styles[0], x, y), plot(axes[1],styles[1],x,delta(y))]
+	print (delta(y))
+
 
 	# We'd normally specify a reasonable "interval" here...
+	# def animate(i):
+	# 	for j, line in enumerate(lines, start=2):
+	# 		line.set_ydata(yvars[int(0+i):int(10+i)])
+	# 	return lines
 	def animate(i):
-		for j, line in enumerate(lines, start=6):
-			line.set_ydata(yvars[int(0+i):int(10+i)])
+		lines[0].set_ydata(yvars[int(0+i):int(10+i)])
+		lines[1].set_ydata(delta(yvars[int(0+i):int(10+i)]))
 		return lines
-	ani = animation.FuncAnimation(fig, animate, range(1, 15), interval=50, blit=True)
+	ani = animation.FuncAnimation(fig, animate, frames=len(xvars)-10, interval=50, blit=True)
 	plt.show()
 
 def findvars(starttime, endtime, arbdata, inc):
