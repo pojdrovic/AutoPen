@@ -26,9 +26,18 @@ except:
 	print ('Not existing')
 '''
 
-extract = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar'])
-if extract.returncode != 0:
-	print ('EXTRACTION FAILED: Failed to decompress the o2oo tar file')
-	print ('WITH ERROR CODE:', extract.returncode)
-else:
-	print ('EXTRACTION SUCCESSFUL: Successfully extracted o2oo tar file')
+r = subprocess.run(['ls', '-l']).returncode
+print (r)
+
+'''
+
+repo_socketCAN = 'https://github.com/linux-can/folder' #needed to run can-utils
+index = repo_socketCAN.rfind('/')
+folder_name = repo_socketCAN[index:]
+current_dir = os.getcwd()
+path = current_dir + folder_name
+os.chdir(path)
+run = subprocess.run(['python3', 's.py'])
+print (os.getcwd())
+
+'''
