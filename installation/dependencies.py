@@ -5,12 +5,12 @@
 
 import general_use
 
-def install_general(pack_man, i): # maven, pip 
+def commandline_install(pack_man, i): # maven, pip 
 	general_use.update(d)
-	c = subprocess.run(['sudo', pack_man, 'install', i])
+	c = subprocess.run(['sudo', pack_man, '-y', 'install', i])
 	return c.returncode
 
-def download_general(toolname, link):
+def download_install(toolname, link):
 	d = subprocess.run(['curl', '-o', toolname, link]) 
 	return d.returncode
 
@@ -18,6 +18,11 @@ def clone_git_repo(repo):
 	print ("Cloning repository...")	#might install 
 	clone = subprocess.run(["git", "clone", repo])
 	return clone.returncode
+
+
+
+
+
 
 def install_pyserial(link):
 	down_load = subprocess.run(['curl', '-o', 'pyserial', link]) #FYI MIGHT BE ABLE TO RUN PIP INSTALL PYSERIAL 
