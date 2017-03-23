@@ -62,10 +62,10 @@ repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
 repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
 repo_c0f = 'https://github.com/zombieCraig/c0f.git'
 repo_udsim = 'https://github.com/zombieCraig/UDSim.git'
+repo_katoolin = 'https://github.com/LionSec/katoolin.git'
 
 #BLUETOOTH
 repo_bluelog = 'https://github.com/MS3FGX/Bluelog.git'
-repo_bluez = 'https://github.com/khvzak/bluez-tools.git'
 
 
 #for download links
@@ -318,6 +318,15 @@ def downloaded_tools(d, toolname, link): #WxPython and some other library
 				print ('WITH ERROR CODE:', rom_rc)
 			else:
 				print ('INSTALLATION SUCCESSFUL: Successfully installed RomRaiders')
+		elif toolname == 'katoolin':	
+			print ("Setting /usr/bin/katoolin to executable...")
+			changemode_EC = subprocess.run(["chmod", "754", "/usr/bin/katoolin"]) #executable script for both you and your group but not for the world. 
+			if changemode_EC.returncode != 0:
+				print ("CONVERSION FAILED: Could not make /usr/bin/katoolin executable")
+				print ("ERROR CODE:", changemode_EC.returncode)
+			elif changemode_EC.returncode == 0:
+				print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
+				print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
 def installed_tools(distro, toolname): #this function is for tools that are apt-getable / yumable
 	pack_man = general_use.package_tool(d)
