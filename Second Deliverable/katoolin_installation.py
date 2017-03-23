@@ -17,13 +17,7 @@ Note: All information will be logged to /var/log/katoolin_installation.py
 
 import subprocess
 
-print ("Cloning Katoolin...")
-katoolin_EC = subprocess.run(["git", "clone", "https://github.com/LionSec/katoolin.git"])
-if katoolin_EC.returncode != 0:
-	print ("INSTALLATION FAILED: Could not clone Katoolin Repository and install Katoolin")
-	print ("ERROR CODE:", katoolin_EC.returncode)
-elif katoolin_EC.returncode == 0:
-	print ("INSTALLATION SUCCESSFUL: Katoolin successfully installed")
+
 	print ("Setting /usr/bin/katoolin to executable...")
 	changemode_EC = subprocess.run(["chmod", "754", "/usr/bin/katoolin"]) #executable script for both you and your group but not for the world. 
 	if changemode_EC.returncode != 0:
