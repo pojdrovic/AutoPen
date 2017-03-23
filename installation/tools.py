@@ -52,34 +52,18 @@ import dependencies
 import subprocess
 import os
 
-#this will be placed somewhere else, maybe a dictionary?
-repo_socketCAN = 'https://github.com/linux-can/can-utils.git' #needed to run can-utils
-repo_canbus_utils = 'https://github.com/digitalbond/canbus-utils'
-repo_kayak = 'https://github.com/dschanoeh/Kayak.git'
-repo_caringcaribou = 'https://github.com/CaringCaribou/caringcaribou.git' #want to check this to make sure it works, instructions a bit unclear
-repo_c0f = 'https://github.com/zombieCraig/c0f.git'
-repo_udsim = 'https://github.com/zombieCraig/UDSim.git'
-repo_katoolin = 'https://github.com/LionSec/katoolin.git'
 
-#BLUETOOTH
-repo_bluelog = 'https://github.com/MS3FGX/Bluelog.git'
-
-
-#for download links
-link_pyobd = 'http://www.obdtester.com/download/pyobd_0.9.3.tar.gz'
 link_pyobd_debian = 'http://www.obdtester.com/download/pyobd_0.9.3_all.deb'
 link_pyserial = 'https://sourceforge.net/projects/pyserial/files/pyserial/2.0/pyserial-2.0.zip/download'
-link_o2oo = 'https://www.vanheusden.com/O2OO/O2OO-0.9.tgz'
-link_romraider = 'http://assembla.com/spaces/romraider/documents/a5Ao9gHEir5P9Udmr6QqzO/download/RomRaider0.5.9RC3-linux.jar'
 link_pythoncan = 'https://bitbucket.org/hardbyte/python-can/get/77eea796362b.zip'
 link_package = 'https://pkgconfig.freedesktop.org/releases/pkg-config-0.21.tar.gz' #needed for bluelog
 
-def github_tools(d, toolname, repo):
+
+def github_tools(packman, toolname, repo):
 	'''
 		This function installs the tools that use github
 		rc stands for returncode
 	'''
-	pack_man = general_use.package_tool(d)
 	general_use.update(d)
 
 	print ("Cloning repository...")	#might install 
@@ -274,8 +258,7 @@ def github_tools(d, toolname, repo):
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
 
 
-def downloaded_tools(d, toolname, link): #WxPython and some other library
-	pack_man = general_use.package_tool(d)
+def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(d)
 
 	#NOTE: If pyOBD link doesn't work tell them the install.html is available
@@ -325,8 +308,7 @@ def downloaded_tools(d, toolname, link): #WxPython and some other library
 				print ("CONVERSION SUCCESSFUL: /usr/bin/katoolin set to executable")
 				print ('INSTALLATION SUCCESSFUL: Successfully installed katoolin')
 
-def installed_tools(distro, toolname): #this function is for tools that are apt-getable / yumable
-	pack_man = general_use.package_tool(d)
+def installed_tools(pack_man, toolname): #this function is for tools that are apt-getable / yumable
 	general_use.update(d)
 
 	install_rc = -1
