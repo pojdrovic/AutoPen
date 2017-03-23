@@ -16,7 +16,7 @@ Assumes user is running as root and has apt-get installed
 import general_use
 
 distro = general_use.check_distribution()
-pack_man = package_tool(distro)
+pack_man = general_use.package_tool(distro)
 
 
 def install_python(pack_man):
@@ -27,11 +27,11 @@ def install_python(pack_man):
 	print ('Installing Python 3...')
 
 
-	p = subprocess.run("sudo", pack_man, "install", "python3")
-	if p.returncode != 0:
+	p_rc = dependencies.commandline_install(pack_man, "python3")
+	if p_rc != 0:
 		print ('INSTALLATION FAILED: Could not install Python 3')
-		print ("WITH ERROR CODE:", p.returncode)
-	elif p.returncode == 0:
+		print ("WITH ERROR CODE:", p_rc)
+	else:
 		print ('INSTALLATION SUCCESSFUL: Python 3 successfully installed')
 
 def install_git(pack_man):
@@ -40,12 +40,12 @@ def install_git(pack_man):
 	'''
 
 	print('Installing git...')
-	g = subprocess.run("sudo", pack_man, "install", "git")
+	g_rc = dependencies.command_line(pack_man, "git")
 
-	if g.returncode != 0:
+	if g_rc != 0:
 		print ("INSTALLATION FAILED: Could not install git")
-		print ("WITH ERROR CODE:", g.returncode)
-	elif g.returncode == 0:
+		print ("WITH ERROR CODE:", g_rc)
+	else:
 		print ("INSTALLATION SUCCESSFUL: Git successfully installed")
 
 
