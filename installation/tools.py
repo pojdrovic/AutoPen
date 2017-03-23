@@ -296,12 +296,12 @@ def downloaded_tools(d, toolname, link): #WxPython and some other library
 				if deb_rc != 0:
 					print ('Download Failed: Failed to download debian specific file') #need to figure out what this is for
 			print ('Beginning pyserial installation...')
-			pyserial_rc = dependencies.download_install('pyserial', link_pyserial)
+			pyserial_rc = dependencies.install_pyserial(link_pyserial)
 			if pyserial_rc != 0:
 				print ('INSTALLATION FAILED: Failed to install pyserial. Cannot complete pyobd installation')
 				print ('WITH ERROR CODE:', pyserial_rc)
 			else:
-				print ('INSTALLATION SUCCESSFUL: Successfully installed pyserial and pyobd')	
+				print ('INSTALLATION SUCCESSFUL: Successfully installed pyobd')	
 		elif toolname = 'o2oo':
 			print ('Beginning o2oo installation...')
 			extract_rc = subprocess.run(['tar', '-xzvf', 'O2OO-0.9.tar']).returncode
