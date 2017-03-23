@@ -30,9 +30,6 @@ Tools may be included:
 		will provide a section in here with the github link and the website link so that the user can build their own
 		Also, will possibly provide steps on how to do so (will learn how to do this first)
 
-
-
-
 Note:
 	RomRaider: Subaru
 		Warning: RomRaider is intended for use only by experienced tuners who understand the consequences. As with any tuning solution, the potential
