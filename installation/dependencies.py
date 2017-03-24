@@ -47,42 +47,42 @@ def install_pyserial(link):
 def install_NPM(pack_man):
 
 	print ('Installing npm...')
-		npm_rc = install_general(pack_man, 'npm')
-		if npm_rc != 0:
-			print ('INSTALLATION FAILED: Could not install npm. This package is necessary to run canbus-utils')
-			print ('WITH ERROR CODE: ', npm_rc)
-			return npm_rc
-		else:
-			print ('INSTALLATION SUCCESSFUL: Successfully installed npm')
-			return 0
+	npm_rc = install_general(pack_man, 'npm')
+	if npm_rc != 0:
+		print ('INSTALLATION FAILED: Could not install npm. This package is necessary to run canbus-utils')
+		print ('WITH ERROR CODE: ', npm_rc)
+		return npm_rc
+	else:
+		print ('INSTALLATION SUCCESSFUL: Successfully installed npm')
+		return 0
 
 def check_symlink(source_file, symlink):
 	
-	check_rc = subprocess.run(['test', '-h', symlink])
-	if check.returncode != 0:
+	check_rc = subprocess.run(['test', '-h', symlink]).returncode
+	if check_rc!= 0:
 		print ('Creating symbolic link between', source_file, 'and', symlink, '...')
-		symlink = subprocess.run(['sudo', 'ln', '-s', source_file, symlink]) #this might not work
-		if symlink.returncode != 0:
+		symlink = subprocess.run(['sudo', 'ln', '-s', source_file, symlink]).returncode #this might not work
+		if symlink_rc != 0:
 			print ('SYMLINK CREATION FAILED: Failed to create a symbolic link between', source_file, 'and', symlink)
-		elif symlink.returncode == 0:
+		elif symlink_rc == 0:
 			print ('SYMLINK CREATION SUCCESSFUL: Successfully created a symbolic link between', source_file, 'and', symlink)
-		return symlink.returncode
+		return symlink_rc
 	else:
 		print ('Symbolic link already created between', source_file, 'and', symlink)
 		return 0
 
 def check_NPM(pack_man): #cant decide if should do this / count this as basics, like install ruby and gcc and homebrew so that later can just run brew install node? 
 
-	check_node_existence = subprocess.run(['command', '-v', 'node'])
-	check_npm_existence = subprocess.run(['command', '-v', 'npm'])
+	check_node_existence_rc = subprocess.run(['command', '-v', 'node']).returncode
+	check_npm_existence_rc = subprocess.run(['command', '-v', 'npm']).returncode
 
-	if check_node_existence.returncode == 0:
-		if check_npm_existence.returncode == 0:
+	if check_node_existence == 0:
+		if check_npm_existence == 0:
 			print ('CONFIRMATION COMPLETE: Both node.js and npm are installed')
 			i_rc = 0
-		elif check_npm_existence.returncode != 0:
+		else:
 			i_rc = install_NPM(pack_man)
-	elif check_node_existence.returncode != 0:
+	else:
 		print ('Installing nodejs...')
 		node_rc = commandline_install(pack_man, 'nodejs')
 		if node_rc != 0:
