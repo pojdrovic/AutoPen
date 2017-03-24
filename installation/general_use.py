@@ -5,6 +5,7 @@
 '''
 
 import platform
+import subprocess
 
 def check_distribution():
 
@@ -38,5 +39,6 @@ def update(d):
 		This function updates software packages based on repository state
 		This needs to be included at the beginning of every major installation function
 	'''	
+
 	pack_man = package_tool(d)
 	update = subprocess.run(["sudo", pack_man, "update"])
