@@ -257,7 +257,6 @@ def github_tools(packman, toolname, repo):
 				else:
 					print ('BUILD SUCCESSFUL: Successfully completed Bluemaho build')
 
-
 def downloaded_tools(pack_man, toolname, link): #WxPython and some other library
 	general_use.update(d)
 
