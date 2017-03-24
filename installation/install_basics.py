@@ -14,6 +14,7 @@ Assumes user is running as root and has apt-get installed
 #current issue a lot of these asks do you want to continue, obvi need to say yes. How does one automate that? 
 
 import general_use
+import dependencies
 
 distro = general_use.check_distribution()
 pack_man = general_use.package_tool(distro)
